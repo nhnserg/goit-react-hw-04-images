@@ -17,26 +17,26 @@ export const App = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    const getImages = async () => {
+      try {
+        setIsLoading(true);
+
+        const newImages = await fetchImages({ query, page });
+
+        setImages((prevImages) => [...prevImages, ...newImages]);
+        setPage((prevPage) => prevPage + 1);
+        setHasMoreImages(newImages.length > 0);
+      } catch (error) {
+        console.error('Error fetching images:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
     if (query) {
       getImages();
     }
-  }, []);
-
-  const getImages = async () => {
-    try {
-      setIsLoading(true);
-
-      const newImages = await fetchImages({ query, page });
-
-      setImages((prevImages) => [...prevImages, ...newImages]);
-      setPage((prevPage) => prevPage + 1);
-      setHasMoreImages(newImages.length > 0);
-    } catch (error) {
-      console.error('Error fetching images:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  }, [query, page]);
 
   const handleSearchSubmit = (newQuery) => {
     setQuery(newQuery);
@@ -71,4 +71,4 @@ export const App = () => {
     </div>
   );
 };
-
+zzz
