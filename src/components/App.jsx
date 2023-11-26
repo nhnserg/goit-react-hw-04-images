@@ -13,7 +13,7 @@ export const App = () => {
   const [page, setPage] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState('');
-  const [hasMoreImages, setHasMoreImages] = useState(true);
+  const [hasMoreImages, setHasMoreImages] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -24,7 +24,6 @@ export const App = () => {
         const newImages = await fetchImages({ query, page });
 
         setImages((prevImages) => [...prevImages, ...newImages]);
-        setPage((prevPage) => prevPage + 1);
         setHasMoreImages(newImages.length > 0);
       } catch (error) {
         console.error('Error fetching images:', error);
@@ -66,7 +65,7 @@ export const App = () => {
       <SearchBar onSubmit={handleSearchSubmit} />
       <ImageGallery images={images} onImageClick={handleImageClick} />
       {isLoading && <Loader />}
-      <Button onClick={handleLoadMore} isVisible={hasMoreImages && images.length > 0} />
+      {hasMoreImages && images.length > 0 && <Button onClick={handleLoadMore} />}
       {showModal && <Modal image={selectedImage} onClose={handleCloseModal} />}
     </div>
   );
