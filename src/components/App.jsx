@@ -47,7 +47,7 @@ export const App = () => {
 
   const handleLoadMore = () => {
     if (hasMoreImages) {
-      getImages();
+      setPage((prevPage) => prevPage + 1);
     }
   };
 
@@ -71,4 +71,5 @@ export const App = () => {
     </div>
   );
 };
-zzz
+
+export default App;
