@@ -20,7 +20,7 @@ export const App = () => {
     if (query) {
       getImages();
     }
-  }, [query]);
+  }, []);
 
   const getImages = async () => {
     try {
