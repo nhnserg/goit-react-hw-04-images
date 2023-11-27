@@ -4,7 +4,7 @@ import styles from './Button.module.css';
 
 const Button = ({ onClick, isVisible }) => {
   return (
-    <button onClick={onClick} className={styles.Button} style={{ display: isVisible ? 'block' : 'none' }}>
+    <button type='button' onClick={onClick} className={styles.Button} style={{ display: isVisible ? 'block' : 'none' }}>
       Load More
     </button>
   );
@@ -12,7 +12,7 @@ const Button = ({ onClick, isVisible }) => {
 
 Button.propTypes = {
   onClick: PropTypes.func.isRequired,
-
+  isVisible: PropTypes.bool.isRequired,
 };
 
 export default Button;
