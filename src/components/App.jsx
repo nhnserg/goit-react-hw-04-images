@@ -22,9 +22,7 @@ export const App = () => {
         setIsLoading(true);
 
         const newImages = await fetchImages({ query, page });
-
         setImages((prevImages) => [...prevImages, ...newImages]);
-
       } catch (error) {
         console.error('Error fetching images:', error);
       } finally {
@@ -38,10 +36,13 @@ export const App = () => {
   }, [query, page]);
 
   const handleSearchSubmit = (newQuery) => {
+    if (newQuery.trim() === '') {
+      return alert('Enter something!');
+    }
+
     setQuery(newQuery);
     setImages([]);
     setPage(1);
-
   };
 
   const handleLoadMore = () => {
@@ -58,15 +59,15 @@ export const App = () => {
     setSelectedImage('');
   };
 
+  const maxImagesToShow = 11;
+
   return (
     <div className={styles.App}>
       <SearchBar onSubmit={handleSearchSubmit} />
       <ImageGallery images={images} onImageClick={handleImageClick} />
       {isLoading && <Loader />}
-      {images.length > 0 && <Button onClick={handleLoadMore} isVisible={true} />}
+      {images.length > 0 && images.length > maxImagesToShow && <Button onClick={handleLoadMore} isVisible={true} />}
       {showModal && <Modal image={selectedImage} onClose={handleCloseModal} />}
     </div>
   );
 };
-
-export default App;
