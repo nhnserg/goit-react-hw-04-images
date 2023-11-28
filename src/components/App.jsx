@@ -59,14 +59,14 @@ export const App = () => {
     setSelectedImage('');
   };
 
-  const maxImagesToShow = 11;
+  const maxImagesToShow = 12;
 
   return (
     <div className={styles.App}>
       <SearchBar onSubmit={handleSearchSubmit} />
       <ImageGallery images={images} onImageClick={handleImageClick} />
       {isLoading && <Loader />}
-      {images.length > 0 && images.length > maxImagesToShow && <Button onClick={handleLoadMore} isVisible={true} />}
+      {images.length >= maxImagesToShow && <Button onClick={handleLoadMore} isVisible={true} />}
       {showModal && <Modal image={selectedImage} onClose={handleCloseModal} />}
     </div>
   );
