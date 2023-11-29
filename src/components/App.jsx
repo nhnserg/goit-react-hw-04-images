@@ -15,14 +15,18 @@ export const App = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [loadMore, setLoadMore] = useState(false);
 
   useEffect(() => {
     const getImages = async () => {
       try {
         setIsLoading(true);
 
-        const newImages = await fetchImages({ query, page });
-        setImages((prevImages) => [...prevImages, ...newImages]);
+        const { hits, totalHits } = await fetchImages({ query, page });
+
+        setLoadMore(page < Math.ceil(totalHits / 12));
+
+        setImages((prevImages) => [...prevImages, ...hits]);
       } catch (error) {
         console.error('Error fetching images:', error);
       } finally {
@@ -59,14 +63,13 @@ export const App = () => {
     setSelectedImage('');
   };
 
-  const maxImagesToShow = 12;
 
   return (
     <div className={styles.App}>
       <SearchBar onSubmit={handleSearchSubmit} />
       <ImageGallery images={images} onImageClick={handleImageClick} />
       {isLoading && <Loader />}
-      {images.length >= maxImagesToShow && <Button onClick={handleLoadMore} isVisible={true} />}
+      {loadMore && <Button onClick={handleLoadMore} />}
       {showModal && <Modal image={selectedImage} onClose={handleCloseModal} />}
     </div>
   );
