@@ -22,7 +22,7 @@ export const App = () => {
       try {
         setIsLoading(true);
 
-        const { hits, totalHits } = await fetchImages({ query, page });
+        const { hits, totalHits } = await fetchImages({ query, page, });
 
         setLoadMore(page < Math.ceil(totalHits / 12));
 
